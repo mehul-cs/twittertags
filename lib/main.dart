@@ -17,10 +17,9 @@ void main() async {
   // print(res.body);
 
   List<String> tags = res.body.split("og:");
-  print(tags[1].toString());
-  print(tags[2].toString());
-  print(tags[3].toString());
-  print(tags[4].toString());
+  for(String tag in tags) {
+    print(tag + "\n ************** \n");
+  }
 
   // RegExp exp = new RegExp("og:", caseSensitive: false, );
   // String a = exp.allMatches(res.body).first.input;
