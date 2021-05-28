@@ -1,4 +1,5 @@
 import 'package:http/http.dart' as http;
+import 'package:metadata_fetch/metadata_fetch.dart';
 
 void main() async {
   var headers = {
@@ -10,16 +11,24 @@ void main() async {
   };
 
   var res = await http.get(
-      'https://twitter.com/sharifshameem/status/1284095222939451393',
+      'https://twitter.com/natmiletic/status/1397913472470376462?s=20',
       headers: headers);
   if (res.statusCode != 200)
     throw Exception('http.get error: statusCode= ${res.statusCode}');
   // print(res.body);
 
-  List<String> tags = res.body.split("og:");
-  for(String tag in tags) {
-    print(tag + "\n ************** \n");
-  }
+  var document = responseToDocument(res);
+  var data = MetadataParser.parse(document);
+
+  print("Description is: ${data.description} \n");
+  print("Image is: ${data.image} \n");
+  print("Title is: ${data.title} \n");
+  print("Url is: ${data.url} \n");
+
+  // List<String> tags = res.body.split("og:");
+  // for (String tag in tags) {
+  //   print(tag + "\n ************** \n");
+  // }
 
   // RegExp exp = new RegExp("og:", caseSensitive: false, );
   // String a = exp.allMatches(res.body).first.input;
